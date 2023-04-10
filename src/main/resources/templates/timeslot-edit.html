@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit TimeSlot</title>
+</head>
+<body>
+<h1>Edit TimeSlot</h1>
+<h3 th:if="${message != null}" th:text="${message}">Message</h3>
+<form th:action="@{/timeSlot}" th:object="${entity}" method="post">
+
+    <p>
+        <label for="H09_M00_TO_H09_M30">H09_M00_TO_H09_M30:</label>
+            <input type="text" th:field="*{H09_M00_TO_H09_M30}" id="H09_M00_TO_H09_M30" required>
+        </p>
+    <p>
+        <label for="H09_M30_TO_H10_M00">H09_M30_TO_H10_M00:</label>
+            <input type="text" th:field="*{H09_M30_TO_H10_M00}" id="H09_M30_TO_H10_M00" required>
+        </p>
+    <p>
+        <label for="H10_M00_TO_H10_M30">H10_M00_TO_H10_M30:</label>
+            <input type="text" th:field="*{H10_M00_TO_H10_M30}" id="H10_M00_TO_H10_M30" required>
+        </p>
+    <p>
+        <label for="H10_M30_TO_H11_M00">H10_M30_TO_H11_M00:</label>
+            <input type="text" th:field="*{H10_M30_TO_H11_M00}" id="H10_M30_TO_H11_M00" required>
+        </p>
+    <p>
+        <label for="H11_M00_TO_H11_M30">H11_M00_TO_H11_M30:</label>
+            <input type="text" th:field="*{H11_M00_TO_H11_M30}" id="H11_M00_TO_H11_M30" required>
+        </p>
+    <p>
+        <label for="H11_M30_TO_H12_M00">H11_M30_TO_H12_M00:</label>
+            <input type="text" th:field="*{H11_M30_TO_H12_M00}" id="H11_M30_TO_H12_M00" required>
+        </p>
+    <p>
+        <label for="H12_M00_TO_H12_M30">H12_M00_TO_H12_M30:</label>
+            <input type="text" th:field="*{H12_M00_TO_H12_M30}" id="H12_M00_TO_H12_M30" required>
+        </p>
+    <p>
+        <label for="H12_M30_TO_H13_M00">H12_M30_TO_H13_M00:</label>
+            <input type="text" th:field="*{H12_M30_TO_H13_M00}" id="H12_M30_TO_H13_M00" required>
+        </p>
+    <p>
+        <label for="H13_M00_TO_H13_M30">H13_M00_TO_H13_M30:</label>
+            <input type="text" th:field="*{H13_M00_TO_H13_M30}" id="H13_M00_TO_H13_M30" required>
+        </p>
+    <p>
+        <label for="H13_M30_TO_H14_M00">H13_M30_TO_H14_M00:</label>
+            <input type="text" th:field="*{H13_M30_TO_H14_M00}" id="H13_M30_TO_H14_M00" required>
+        </p>
+    <p>
+        <label for="H14_M00_TO_H14_M30">H14_M00_TO_H14_M30:</label>
+            <input type="text" th:field="*{H14_M00_TO_H14_M30}" id="H14_M00_TO_H14_M30" required>
+        </p>
+    <p>
+        <label for="H14_M30_TO_H15_M00">H14_M30_TO_H15_M00:</label>
+            <input type="text" th:field="*{H14_M30_TO_H15_M00}" id="H14_M30_TO_H15_M00" required>
+        </p>
+    <p>
+        <label for="H15_M00_TO_H15_M30">H15_M00_TO_H15_M30:</label>
+            <input type="text" th:field="*{H15_M00_TO_H15_M30}" id="H15_M00_TO_H15_M30" required>
+        </p>
+    <p>
+        <label for="H15_M30_TO_H16_M00">H15_M30_TO_H16_M00:</label>
+            <input type="text" th:field="*{H15_M30_TO_H16_M00}" id="H15_M30_TO_H16_M00" required>
+        </p>
+    <p>
+        <label for="H16_M00_TO_H16_M30">H16_M00_TO_H16_M30:</label>
+            <input type="text" th:field="*{H16_M00_TO_H16_M30}" id="H16_M00_TO_H16_M30" required>
+        </p>
+    <p>
+        <label for="H16_M30_TO_H17_M00">H16_M30_TO_H17_M00:</label>
+            <input type="text" th:field="*{H16_M30_TO_H17_M00}" id="H16_M30_TO_H17_M00" required>
+        </p>
+    <p>
+        <label for="H17_M00_TO_H17_M30">H17_M00_TO_H17_M30:</label>
+            <input type="text" th:field="*{H17_M00_TO_H17_M30}" id="H17_M00_TO_H17_M30" required>
+        </p>
+    <p>
+        <label for="H17_M30_TO_H18_M00">H17_M30_TO_H18_M00:</label>
+            <input type="text" th:field="*{H17_M30_TO_H18_M00}" id="H17_M30_TO_H18_M00" required>
+        </p>
+    <p>
+        <label for="name">name:</label>
+            <input type="text" th:field="*{name}" id="name" required>
+        </p>
+    <p>
+        <label for="$VALUES">$VALUES:</label>
+            <input type="text" th:field="*{$VALUES}" id="$VALUES" required>
+        </p>
+
+    <p>
+        <input type="text" th:field="*{id}" id="id">
+        <input type="submit" value="Save">
+        <a th:href="@{/timeSlot}">Cancel</a>
+    </p>
+</form>
+
+</body>
+</html>

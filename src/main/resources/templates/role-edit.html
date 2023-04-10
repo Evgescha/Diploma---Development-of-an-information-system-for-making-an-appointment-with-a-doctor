@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Role</title>
+</head>
+<body>
+<h1>Edit Role</h1>
+<h3 th:if="${message != null}" th:text="${message}">Message</h3>
+<form th:action="@{/role}" th:object="${entity}" method="post">
+
+    <p>
+        <label for="name">name:</label>
+            <input type="text" th:field="*{name}" id="name" required>
+        </p>
+
+    <p>
+        <input type="text" th:field="*{id}" id="id">
+        <input type="submit" value="Save">
+        <a th:href="@{/role}">Cancel</a>
+    </p>
+</form>
+
+</body>
+</html>

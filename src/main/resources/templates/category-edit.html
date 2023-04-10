@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Category</title>
+</head>
+<body>
+<h1>Edit Category</h1>
+<h3 th:if="${message != null}" th:text="${message}">Message</h3>
+<form th:action="@{/category}" th:object="${entity}" method="post">
+
+    <p>
+        <label for="name">name:</label>
+            <input type="text" th:field="*{name}" id="name" required>
+        </p>
+    <p>
+        <label for="appointments">appointments:</label>
+            <select multiple="multiple" th:field="*{appointments}" id="appointments">
+            <option th:each="appointments_item : ${appointments_list}" th:value="${appointments_item}" th:text="${appointments_item}"></option>
+        </select>
+        </p>
+
+    <p>
+        <input type="text" th:field="*{id}" id="id">
+        <input type="submit" value="Save">
+        <a th:href="@{/category}">Cancel</a>
+    </p>
+</form>
+
+</body>
+</html>

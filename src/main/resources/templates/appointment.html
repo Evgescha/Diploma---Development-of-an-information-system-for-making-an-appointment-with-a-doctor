@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List of Appointment</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>List of Appointment</h1>
+<h3 th:if="${message != null}" th:text="${message}">Message</h3>
+<a th:href="@{/appointment/edit}">Create new Appointment</a>
+<table>
+    <thead>
+    <tr>
+        <th>owner</th>
+        <th>category</th>
+        <th>date</th>
+        <th>status</th>
+        <th>timeSlot</th>
+
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="entity : ${list}">
+                                    <td th:text=${entity.owner}></td>
+                                            <td th:text=${entity.category}></td>
+                                            <td th:text=${entity.date}></td>
+                                            <td th:text=${entity.status}></td>
+                                            <td th:text=${entity.timeSlot}></td>
+                
+        <td>
+            <a th:href="@{/appointment/{id}(id=${entity.id})}">See detail</a>
+            <a th:href="@{/appointment/edit/{id}(id=${entity.id})}">Edit</a>
+            <form th:if="${entity.id!=null}" method="get"
+                  th:action="'/appointment/'
+                  +${entity.id}+'/delete'">
+                <input type="submit" value="Delete" onclick="return confirm('Are you sure?')">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

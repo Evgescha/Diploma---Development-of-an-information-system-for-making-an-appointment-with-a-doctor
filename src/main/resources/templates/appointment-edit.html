@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Appointment</title>
+</head>
+<body>
+<h1>Edit Appointment</h1>
+<h3 th:if="${message != null}" th:text="${message}">Message</h3>
+<form th:action="@{/appointment}" th:object="${entity}" method="post">
+
+    <p>
+        <label for="owner">owner:</label>
+            <input type="text" th:field="*{owner}" id="owner" required>
+        </p>
+    <p>
+        <label for="category">category:</label>
+            <input type="text" th:field="*{category}" id="category" required>
+        </p>
+    <p>
+        <label for="date">date:</label>
+            <input type="text" th:field="*{date}" id="date" required>
+        </p>
+    <p>
+        <label for="status">status:</label>
+            <input type="text" th:field="*{status}" id="status" required>
+        </p>
+    <p>
+        <label for="timeSlot">timeSlot:</label>
+            <input type="text" th:field="*{timeSlot}" id="timeSlot" required>
+        </p>
+
+    <p>
+        <input type="text" th:field="*{id}" id="id">
+        <input type="submit" value="Save">
+        <a th:href="@{/appointment}">Cancel</a>
+    </p>
+</form>
+
+</body>
+</html>

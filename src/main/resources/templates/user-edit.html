@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit User</title>
+</head>
+<body>
+<h1>Edit User</h1>
+<h3 th:if="${message != null}" th:text="${message}">Message</h3>
+<form th:action="@{/user}" th:object="${entity}" method="post">
+
+    <p>
+        <label for="username">username:</label>
+            <input type="text" th:field="*{username}" id="username" required>
+        </p>
+    <p>
+        <label for="password">password:</label>
+            <input type="text" th:field="*{password}" id="password" required>
+        </p>
+    <p>
+        <label for="firstname">firstname:</label>
+            <input type="text" th:field="*{firstname}" id="firstname" required>
+        </p>
+    <p>
+        <label for="lastname">lastname:</label>
+            <input type="text" th:field="*{lastname}" id="lastname" required>
+        </p>
+    <p>
+        <label for="email">email:</label>
+            <input type="text" th:field="*{email}" id="email" required>
+        </p>
+    <p>
+        <label for="image">image:</label>
+            <input type="text" th:field="*{image}" id="image" required>
+        </p>
+    <p>
+        <label for="address">address:</label>
+            <input type="text" th:field="*{address}" id="address" required>
+        </p>
+    <p>
+        <label for="birthDate">birthDate:</label>
+            <input type="text" th:field="*{birthDate}" id="birthDate" required>
+        </p>
+    <p>
+        <label for="roles">roles:</label>
+            <select multiple="multiple" th:field="*{roles}" id="roles">
+            <option th:each="roles_item : ${roles_list}" th:value="${roles_item}" th:text="${roles_item}"></option>
+        </select>
+        </p>
+    <p>
+        <label for="appointments">appointments:</label>
+            <select multiple="multiple" th:field="*{appointments}" id="appointments">
+            <option th:each="appointments_item : ${appointments_list}" th:value="${appointments_item}" th:text="${appointments_item}"></option>
+        </select>
+        </p>
+
+    <p>
+        <input type="text" th:field="*{id}" id="id">
+        <input type="submit" value="Save">
+        <a th:href="@{/user}">Cancel</a>
+    </p>
+</form>
+
+</body>
+</html>
