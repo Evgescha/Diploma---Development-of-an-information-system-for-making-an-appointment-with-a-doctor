@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{/commons/head :: head}"></head>
+<body class="cnt-home">
+
+<div th:replace="~{/commons/header :: header}"></div>
+<div th:replace="~{/commons/banner :: banner}"></div>
+
+
+<section class="mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-5">
+                <h1 class="display-4">Login page</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="body-content outer-top-bd mt-5 mb-5">
+    <div class="container">
+        <div class="sign-in-page inner-bottom-sm">
+            <div class="row">
+                <h3 th:if="${success != null}" th:text="${success}" class="text-center"></h3>
+
+                <h3 th:if="${#request.getParameter('error') != null and #request.getParameter('error') == 'true'}" class="text-center"></h3>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 sign-in">
+                    <h4 class="">Sign in</h4>
+                    <p class="">Hello, Welcome to your account.</p>
+                    <form class="register-form outer-top-xs probootstrap-form" role="form" method="post" action="/login">
+                        <div class="form-group">
+                            <label class="info-title" for="exampleInputEmail1">Username <span>*</span>
+                            </label>
+                            <input type="text" class="form-control form-control text-input" id="exampleInputEmail1" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="info-title" for="exampleInputPassword1">Password <span>*</span>
+                            </label>
+                            <input type="password" class="form-control form-control text-input" id="exampleInputPassword1" name="password" required>
+                        </div>
+                        <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Login</button>
+                    </form>
+                </div>
+                <div class="col-md-6 col-sm-6 create-new-account">
+                    <h4 class="checkout-subtitle">Create a new account</h4>
+                    <form class="register-form outer-top-xs probootstrap-form" role="form" action="/registration" method="post">
+                        <div class="form-group">
+                            <label class="info-title" for="e1">Username <span>*</span>
+                            </label>
+                            <input type="text" class="form-control form-control text-input" id="e1" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="info-title" for="e2">Password<span>*</span>
+                            </label>
+                            <input type="password" class="form-control form-control text-input" id="e2" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="info-title" for="e3">Firstname <span>*</span>
+                            </label>
+                            <input type="text" class="form-control form-control text-input" id="e3" name="firstname" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="info-title" for="e4">Lastname <span>*</span>
+                            </label>
+                            <input type="text" class="form-control form-control text-input" id="e4" name="lastname" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="info-title" for="e5">Email<span>*</span>
+                            </label>
+                            <input type="email" class="form-control form-control text-input" id="e5" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="info-title" for="e6">Image <span>*</span>
+                            </label>
+                            <input type="text" class="form-control form-control text-input" id="e6" name="image" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="info-title" for="exampleInputEmail2">Address <span>*</span>
+                            </label>
+                            <input type="text" class="form-control form-control text-input" id="exampleInputEmail2" name="address" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="info-title" for="exampleInputEmail2">Birth Date <span>*</span>
+                            </label>
+                            <input type="date" class="form-control form-control text-input" id="birthDate" name="birthDate" required>
+                        </div>
+                        <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{/commons/footer :: footer}"></footer>
+
+<div th:replace="~{/commons/script :: script}"></div>
+
+</body>
+</html>

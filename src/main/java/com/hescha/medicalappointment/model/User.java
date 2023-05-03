@@ -2,6 +2,7 @@ package com.hescha.medicalappointment.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,6 +22,8 @@ public class User extends AbstractEntity {
     private String email;
     private String image;
     private String address;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     @ManyToMany
     private Set<Role> roles = new HashSet<>();

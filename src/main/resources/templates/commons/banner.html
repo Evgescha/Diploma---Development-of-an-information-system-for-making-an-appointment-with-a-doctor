@@ -16,10 +16,14 @@
 
         <div class="collapse navbar-collapse" id="probootstrap-nav">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active"><a href="index" class="nav-link pl-0">Home</a></li>
-                <li class="nav-item"><a href="departments" class="nav-link">Departments</a></li>
-                <li class="nav-item"><a href="about" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="contact" class="nav-link">Contact</a></li>
+                <li class="nav-item active"><a href="/" class="nav-link pl-0">Home</a></li>
+                <li class="nav-item"><a href="/departments" class="nav-link">Departments</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+                <li class="nav-item" th:if="${#request.userPrincipal != null and !#request.isUserInRole('ADMIN') }"><a href="/user/profile">Profile</a></li>
+                <li class="nav-item" th:if="${#request.isUserInRole('ADMIN') }"><a href="/user" >Users</a></li>
+                <li class="nav-item" th:if="${#request.userPrincipal == null}"><a href="/login" class="nav-link">Login</a></li>
+                <li class="nav-item" th:if="${#request.userPrincipal != null}"><a href="/logout" class="nav-link">Logout</a></li>
             </ul>
             <div class="ml-auto">
             </div>
