@@ -10,10 +10,6 @@ public class IndexController {
     public String about(){
         return "about";
     }
-    @GetMapping("/contact")
-    public String contact(){
-        return "contact";
-    }
     @GetMapping("/departments")
     public String departments(){
         return "departments";

@@ -17,7 +17,86 @@
       </div>
     </div>
   </section>
-  
+
+<div class="container-xxl py-6"
+     th:if="${#request.isUserInRole('ADMIN') or (#request.userPrincipal != null and user.isManagerOrAdmin() == true)}" >
+  <div class="container">
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item">
+        <a class="nav-link active" id="new-tab" data-bs-toggle="tab" href="#new">NEW</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="done-tab" data-bs-toggle="tab" href="#done">DONE</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="new" role="tabpanel" aria-labelledby="new-tab">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Subject</th>
+              <th>Message</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="contact : ${list}" th:if="${contact.contactStatus.ordinal == 0}">
+              <td th:text="${contact.name}"></td>
+              <td th:text="${contact.email}"></td>
+              <td th:text="${contact.subject}"></td>
+              <td th:text="${contact.message}"></td>
+              <td>
+                <form action="/contact/changeStatus" method="post" class="probootstrap-form">
+                  <input type="hidden" th:value="${contact.id}" name="contactId" />
+                  <button class="btn btn-success" type="submit">Change to DONE</button>
+                </form>
+              </td>
+              <td>
+                <a th:href="'/contact/'+${contact.id}+'/delete'" class="btn btn-danger rounded-pill py-2 px-4" >Delete</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="done" role="tabpanel" aria-labelledby="done-tab">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Subject</th>
+              <th>Message</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="contact : ${list}" th:if="${contact.contactStatus.ordinal == 1}">
+              <td th:text="${contact.name}"></td>
+              <td th:text="${contact.email}"></td>
+              <td th:text="${contact.subject}"></td>
+              <td th:text="${contact.message}"></td>
+              <td>
+                <form action="/contact/changeStatus" method="post">
+                  <input type="hidden" th:value="${contact.id}" name="contactId" />
+                  <button class="btn btn-warning" type="submit">Change to NEW</button>
+                </form>
+              </td>
+              <td>
+                <a th:href="'/contact/'+${contact.id}+'/delete'" class="btn btn-danger rounded-pill py-2 px-4" >Delete</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
   <section class="probootstrap-services">
     <div class="container">
@@ -35,14 +114,18 @@
           <h1 class="mt-4 mb-4">Get In Touch</h1>
           <div class="row">
             <div class="col-md-12">
-              <form action="" method="post" class="probootstrap-form">
+              <form method="post" action="/contact" class="probootstrap-form">
                 <div class="form-group">
                   <label for="name" class="sr-only">Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                  <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name">
                 </div>
                 <div class="form-group">
                   <label for="email" class="sr-only">Email</label>
-                  <input type="text" class="form-control" id="email" placeholder="Enter your email">
+                  <input type="text" class="form-control" id="email" placeholder="Enter your email" name="email">
+                </div>
+                <div class="form-group">
+                  <label for="subject" class="sr-only">Subject</label>
+                  <input type="text" class="form-control" id="subject" placeholder="Enter the subject" name="subject">
                 </div>
                 <div class="form-group">
                   <label for="message" class="sr-only">Message</label>
@@ -52,6 +135,7 @@
                   <input type="submit" class="btn btn-primary" value="Send Message">
                 </div>
               </form>
+
             </div>
           </div>
         </div>

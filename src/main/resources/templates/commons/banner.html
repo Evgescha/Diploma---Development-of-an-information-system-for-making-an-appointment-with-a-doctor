@@ -25,8 +25,6 @@
                 <li class="nav-item" th:if="${#request.userPrincipal == null}"><a href="/login" class="nav-link">Login</a></li>
                 <li class="nav-item" th:if="${#request.userPrincipal != null}"><a href="/logout" class="nav-link">Logout</a></li>
             </ul>
-            <div class="ml-auto">
-            </div>
         </div>
     </div>
 </nav>
