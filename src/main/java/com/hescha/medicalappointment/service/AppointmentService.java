@@ -5,6 +5,9 @@ import com.hescha.medicalappointment.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class AppointmentService extends CrudService<Appointment> {
@@ -14,6 +17,11 @@ public class AppointmentService extends CrudService<Appointment> {
     public AppointmentService(AppointmentRepository repository) {
         super(repository);
         this.repository = repository;
+    }
+
+
+    public Optional<Appointment> findByCategoryAndTimeSlotAndDate(Category category, TimeSlot timeSlot, LocalDate date) {
+        return repository.findByCategoryAndTimeSlotAndDate(category, timeSlot, date);
     }
 
     public Appointment findByOwner(User owner) {
@@ -53,5 +61,9 @@ public class AppointmentService extends CrudService<Appointment> {
         read.setDate(entity.getDate());
         read.setStatus(entity.getStatus());
         read.setTimeSlot(entity.getTimeSlot());
+    }
+
+    public Set<Appointment> findAllByCategoryAndDate(Category category, LocalDate date) {
+        return repository.findAllByCategoryAndDate(category, date);
     }
 }

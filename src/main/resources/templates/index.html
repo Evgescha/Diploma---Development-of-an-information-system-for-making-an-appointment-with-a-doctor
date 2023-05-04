@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <title>Index</title>
@@ -130,36 +129,104 @@
     </div>
   </section>
 
-  <section class="probootstrap-blog-appointment" id="appointment">
-    <div class="container">
-      <div class="row no-gutters">
-        <div class="col-md-6 p-md-5 p-3 probootstrap-aside-stretch-right">
-          <h2 class="h1 text-white">Make an Appointment</h2>
-          <form action="#" class="probootstrap-form-appointment">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Your Name">
-            </div>
-            <div class="form-group">
-              <input type="email" class="form-control" placeholder="Your Email">
-            </div>
-            <div class="form-group">
-              <span class="icon"><i class="icon-calendar"></i></span>
-              <input type="text" id="probootstrap-date" class="form-control" placeholder="Appointment Date">
-            </div>
-            <div class="form-group">
-              <textarea name="" class="form-control" id="" cols="30" rows="10" placeholder="Write your message"></textarea>
-            </div>
-            <div class="form-group">
-              <input type="submit" value="Submit Form" class="btn btn-secondary">
-            </div>
-          </form>
-        </div>
+<section class="probootstrap-blog-appointment" id="appointment">
+  <div class="container">
+    <div class="row no-gutters">
+      <div class="col-md-6 p-md-5 p-3 probootstrap-aside-stretch-right">
+        <h2 class="h1 text-white">Make an Appointment</h2>
+        <form th:action="@{/appointment}" th:object="${entity}" method="post" class="probootstrap-form-appointment">
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select th:field="*{category}" id="category" required>
+              <option th:each="category : ${categories}"
+                      th:value="${category.id}"
+                      th:text="${category.name}">Category</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="date">Appointment Date</label>
+            <input type="date" th:field="*{date}" id="date" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea th:field="*{message}" id="message" cols="30" rows="10" placeholder="Write your message" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="timeSlot">Time Slot</label>
+            <select th:field="*{timeSlot}" id="timeSlot" required>
+              <option th:each="timeSlot : ${timeslots}"
+                      th:value="${timeSlot}"
+                      th:text="${timeSlot.simpleName}">Time Slot</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Submit Form" class="btn btn-secondary">
+          </div>
+        </form>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<script th:inline="javascript">
+  document.querySelector('.probootstrap-form-appointment').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const categoryId = document.getElementById('category').value;
+    const date = document.getElementById('date').value;
+
+    const response = await fetch(`/appointment/available-time-slots?categoryId=${categoryId}&date=${date}`);
+    const availableTimeSlots = await response.json();
+    const selectedTimeSlot = document.getElementById('timeSlot').value;
 
 
-  <section class="probootstrap-section bg-light">
+    if (availableTimeSlots.includes(selectedTimeSlot)) {
+      // Если выбранный таймслот доступен, отправьте форму
+      document.querySelector('.probootstrap-form-appointment').submit();
+    } else {
+      // Если выбранный таймслот недоступен, покажите список доступных таймслотов
+      showAvailableTimeSlots(availableTimeSlots);
+    }
+  });
+  function showAvailableTimeSlots(data) {
+    let result = "К сожалению данное время уже забронировано. \n" +
+            "Ниже список доступных слотов:\n\n";
+    data.forEach(slot => {
+      result += "\n" + timeSlotToReadableText(slot);
+    });
+    alert(result);
+  }
+  function timeSlotToReadableText(timeSlot) {
+    const timeSlotMapping = {
+      "H09_M00_TO_H09_M30": "9:00 - 9:30",
+      "H09_M30_TO_H10_M00": "9:30 - 10:00",
+      "H10_M00_TO_H10_M30": "10:00 - 10:30",
+      "H10_M30_TO_H11_M00": "10:30 - 11:00",
+      "H11_M00_TO_H11_M30": "11:00 - 11:30",
+      "H11_M30_TO_H12_M00": "11:30 - 12:00",
+      "H12_M00_TO_H12_M30": "12:00 - 12:30",
+      "H12_M30_TO_H13_M00": "12:30 - 13:00",
+      "H13_M00_TO_H13_M30": "13:00 - 13:30",
+      "H13_M30_TO_H14_M00": "13:30 - 14:00",
+      "H14_M00_TO_H14_M30": "14:00 - 14:30",
+      "H14_M30_TO_H15_M00": "14:30 - 15:00",
+      "H15_M00_TO_H15_M30": "15:00 - 15:30",
+      "H15_M30_TO_H16_M00": "15:30 - 16:00",
+      "H16_M00_TO_H16_M30": "16:00 - 16:30",
+      "H16_M30_TO_H17_M00": "16:30 - 17:00",
+      "H17_M00_TO_H17_M30": "17:00 - 17:30",
+      "H17_M30_TO_H18_M00": "17:30 - 18:00"
+    };
+
+    return timeSlotMapping[timeSlot] || "Unknown time slot";
+  }
+
+</script>
+
+
+
+
+    <section class="probootstrap-section bg-light">
     <div class="container">
       <div class="row mb-5">
         <div class="col-md-12 text-center">

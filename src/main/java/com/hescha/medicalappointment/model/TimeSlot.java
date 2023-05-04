@@ -23,5 +23,5 @@ public enum TimeSlot {
     H17_M00_TO_H17_M30 ("17:00 - 17:30"),
     H17_M30_TO_H18_M00 ("17:30 - 18:00");
 
-    final String name;
+    public final String simpleName;
 }

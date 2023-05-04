@@ -1,42 +1,129 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>List of Category</title>
-    <meta charset="UTF-8">
+    <title>Departments</title>
+    <head th:replace="~{/commons/head :: head}"></head>
 </head>
 <body>
-<h1>List of Category</h1>
-<h3 th:if="${message != null}" th:text="${message}">Message</h3>
-<a th:href="@{/category/edit}">Create new Category</a>
-<table>
-    <thead>
-    <tr>
-        <th>name</th>
-        <th>appointments</th>
+<head th:replace="~{/commons/header :: header}"></head>
+<head th:replace="~{/commons/banner :: banner}"></head>
 
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-        <tr th:each="entity : ${list}">
-                                    <td th:text=${entity.name}></td>
-                                            <td>
-                    <ul>
-                        <li th:each="appointments_item : ${entity.appointments}" th:text="${appointments_item}"></li>
+<section class="mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-5">
+                <h1 class="display-4">Departments</h1>
+                <a class="btn btn-primary rounded-pill py-3 px-5 mb-5" th:href="@{/category/edit}">Create new</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const departmentTexts = {};
+    const departmentNames = {};
+
+    /*[# th:each="category : ${categories}"]*/
+    departmentTexts["[[${category.id}]]"] = '[[${category.description}]]';
+    departmentNames["[[${category.id}]]"] = '[[${category.name}]]';
+    /*[/]*/
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const departmentLinks = document.querySelectorAll('.list-unstyled.probootstrap-light a');
+        const nameOfCategory = document.querySelector('.nameOfCategory');
+        const textOfCategory = document.querySelector('.textOfCategory');
+
+        function updateContent(name, text) {
+            nameOfCategory.innerHTML = `
+                <h1 class="mt-4 mb-4">${name}</h1>
+            `;
+            textOfCategory.innerHTML = `
+                <p>${text}</p>
+            `;
+        }
+
+        departmentLinks.forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                const dataId = event.target.getAttribute("data-id");
+                alert(dataId);
+                alert(departmentNames[dataId]);
+                alert(departmentTexts[dataId]);
+                updateContent(departmentNames[dataId], departmentTexts[dataId]);
+            });
+        });
+    });
+    /*]]>*/
+</script>
+
+
+<section class="probootstrap-services">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-md-3 pb-5 probootstrap-aside-stretch-left probootstrap-inside">
+                <div class="mb-3 pt-5">
+                    <h2 class="h6">Departments</h2>
+                    <ul class="list-unstyled probootstrap-light mb-4">
+                        <li th:each="entity:${categories}"><a href="#" th:text="${entity.name}" th:data-id="${entity.id}">Urology</a></li>
                     </ul>
-                </td>
-                
-        <td>
-            <a th:href="@{/category/{id}(id=${entity.id})}">See detail</a>
-            <a th:href="@{/category/edit/{id}(id=${entity.id})}">Edit</a>
-            <form th:if="${entity.id!=null}" method="get"
-                  th:action="'/category/'
-                  +${entity.id}+'/delete'">
-                <input type="submit" value="Delete" onclick="return confirm('Are you sure?')">
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                </div>
+            </div>
+            <div class="col-md-9 pl-md-5 pb-5 pl-0 probootstrap-inside">
+                <h1 class="mt-4 mb-4 nameOfCategory">Urology</h1>
+                <p class="textOfCategory">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="probootstrap-section overlay bg-image" style="background-image: url(images/bg_1.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2 class="text-white display-4">Specialists in Family  Healthcare</h2>
+                <p class="text-white mb-5 lead">Far far away, behind the word mountains, far from the countries Vokalia.</p>
+                <div class="row justify-content-center mb-5">
+                    <div class="col-md-4"><a href="#" class="btn btn-secondary btn-block">Appointment <span class="icon-arrow-right"></span></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="probootstrap-section" id="section-counter">
+    <div class="container">
+        <div class="row">
+            <div class="col-md probootstrap-animate">
+                <div class="probootstrap-counter text-center">
+                    <span class="probootstrap-number" data-number="22">0</span>
+                    <span class="probootstrap-label">Founders</span>
+                </div>
+            </div>
+            <div class="col-md probootstrap-animate">
+                <div class="probootstrap-counter text-center">
+                    <span class="probootstrap-number" data-number="182">0</span>
+                    <span class="probootstrap-label">Number of Staffs</span>
+                </div>
+            </div>
+            <div class="col-md probootstrap-animate">
+                <div class="probootstrap-counter text-center">
+                    <span class="probootstrap-number" data-number="8921">0</span>
+                    <span class="probootstrap-label">Happy Patients</span>
+                </div>
+            </div>
+            <div class="col-md probootstrap-animate">
+                <div class="probootstrap-counter text-center">
+                    <span class="probootstrap-number" data-number="252">0</span>
+                    <span class="probootstrap-label">Business Partner</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<head th:replace="~{/commons/footer :: footer}"></head>
+<head th:replace="~{/commons/script :: script}"></head>
 </body>
 </html>

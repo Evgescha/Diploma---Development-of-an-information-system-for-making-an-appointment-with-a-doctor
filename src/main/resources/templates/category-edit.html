@@ -1,31 +1,48 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Category</title>
+
+<head th:replace="~{/commons/head :: head}"></head>
 </head>
 <body>
-<h1>Edit Category</h1>
-<h3 th:if="${message != null}" th:text="${message}">Message</h3>
-<form th:action="@{/category}" th:object="${entity}" method="post">
+<head th:replace="~{/commons/header :: header}"></head>
+<head th:replace="~{/commons/banner :: banner}"></head>
 
-    <p>
-        <label for="name">name:</label>
-            <input type="text" th:field="*{name}" id="name" required>
-        </p>
-    <p>
-        <label for="appointments">appointments:</label>
-            <select multiple="multiple" th:field="*{appointments}" id="appointments">
-            <option th:each="appointments_item : ${appointments_list}" th:value="${appointments_item}" th:text="${appointments_item}"></option>
-        </select>
-        </p>
+<section class="mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mb-5">
+                <h1 class="display-4">Department edit</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="probootstrap-section" style="background-color: #f8f9fa;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h1 class="mt-4 mb-4">Edit Category</h1>
+                <h3 th:if="${message != null}" th:text="${message}">Message</h3>
+                <form th:action="@{/category}" th:object="${entity}" method="post" class="probootstrap-form">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" th:field="*{name}" id="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea type="text" th:field="*{description}" id="description" class="form-control" rows="10" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{id}" id="id">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a th:href="@{/category}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <p>
-        <input type="text" th:field="*{id}" id="id">
-        <input type="submit" value="Save">
-        <a th:href="@{/category}">Cancel</a>
-    </p>
-</form>
 
+
+<head th:replace="~{/commons/footer :: footer}"></head>
+<head th:replace="~{/commons/script :: script}"></head>
 </body>
 </html>

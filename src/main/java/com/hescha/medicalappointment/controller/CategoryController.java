@@ -32,7 +32,7 @@ public class CategoryController {
 
     @GetMapping
     public String readAll(Model model) {
-        model.addAttribute("list", service.readAll());
+        model.addAttribute("categories", service.readAll());
         return THYMELEAF_TEMPLATE_ALL_ITEMS_PAGE;
     }
 
@@ -61,12 +61,10 @@ public class CategoryController {
             try {
                 Category createdEntity = service.create(entity);
                 ra.addFlashAttribute(MESSAGE, "Creating is successful");
-                return REDIRECT_TO_ALL_ITEMS + "/" + createdEntity.getId();
             } catch (Exception e) {
                 ra.addFlashAttribute(MESSAGE, "Creating failed");
                 e.printStackTrace();
             }
-            return REDIRECT_TO_ALL_ITEMS;
         } else {
             try {
                 service.update(entity.getId(), entity);
@@ -75,8 +73,8 @@ public class CategoryController {
                 e.printStackTrace();
                 ra.addFlashAttribute(MESSAGE, "Editing failed");
             }
-            return REDIRECT_TO_ALL_ITEMS + "/" + entity.getId();
         }
+        return REDIRECT_TO_ALL_ITEMS;
     }
 
     @GetMapping("/{id}/delete")

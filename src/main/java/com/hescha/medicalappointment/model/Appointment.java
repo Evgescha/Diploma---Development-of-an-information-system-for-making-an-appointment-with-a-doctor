@@ -1,6 +1,7 @@
 package com.hescha.medicalappointment.model;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ public class Appointment extends AbstractEntity{
     private User owner;
     @ManyToOne
     private Category category;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     @Column(length = 3000)
     private String message;
