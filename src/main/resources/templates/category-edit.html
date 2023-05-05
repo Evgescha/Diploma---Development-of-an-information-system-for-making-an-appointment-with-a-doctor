@@ -5,20 +5,11 @@
 <head th:replace="~{/commons/header :: header}"></head>
 <head th:replace="~{/commons/banner :: banner}"></head>
 
-<section class="mb-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 mb-5">
-                <h1 class="display-4">Department edit</h1>
-            </div>
-        </div>
-    </div>
-</section>
 <section class="probootstrap-section" style="background-color: #f8f9fa;">
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1 class="mt-4 mb-4">Edit Category</h1>
+                <h1 class="mt-4 mb-4">Edit Department</h1>
                 <h3 th:if="${message != null}" th:text="${message}">Message</h3>
                 <form th:action="@{/category}" th:object="${entity}" method="post" class="probootstrap-form">
                     <div class="form-group">

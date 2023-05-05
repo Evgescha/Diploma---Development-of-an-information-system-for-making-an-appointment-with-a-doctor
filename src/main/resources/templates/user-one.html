@@ -1,71 +1,121 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>View User</title>
-    <meta charset="UTF-8">
+<html lang="en">
+<head th:replace="~{/commons/head :: head}"></head>
 </head>
 <body>
-<h1>User Details</h1>
-<h3 th:if="${message!=null}" th:text="${message}">Message</h3>
-<table>
-        <tr>
-        <th>username:</th>
-                <td th:text="${entity.username}"></td>
-            </tr>
-        <tr>
-        <th>password:</th>
-                <td th:text="${entity.password}"></td>
-            </tr>
-        <tr>
-        <th>firstname:</th>
-                <td th:text="${entity.firstname}"></td>
-            </tr>
-        <tr>
-        <th>lastname:</th>
-                <td th:text="${entity.lastname}"></td>
-            </tr>
-        <tr>
-        <th>email:</th>
-                <td th:text="${entity.email}"></td>
-            </tr>
-        <tr>
-        <th>image:</th>
-                <td th:text="${entity.image}"></td>
-            </tr>
-        <tr>
-        <th>address:</th>
-                <td th:text="${entity.address}"></td>
-            </tr>
-        <tr>
-        <th>birthDate:</th>
-                <td th:text="${entity.birthDate}"></td>
-            </tr>
-        <tr>
-        <th>roles:</th>
-                <td>
-            <ul>
-                <li th:each="roles_item : ${entity.roles}" th:text="${roles_item}"></li>
-            </ul>
-        </td>
-            </tr>
-        <tr>
-        <th>appointments:</th>
-                <td>
-            <ul>
-                <li th:each="appointments_item : ${entity.appointments}" th:text="${appointments_item}"></li>
-            </ul>
-        </td>
-            </tr>
-    
+<head th:replace="~{/commons/header :: header}"></head>
+<head th:replace="~{/commons/banner :: banner}"></head>
 
-</table>
-<br>
-<a th:href="@{/user}">Back to the List</a>
-<a th:href="@{/user/edit/{id}(id=${entity.id})}">Edit</a>
-<form th:if="${entity.id!=null}" method="get"
-         th:action="'/user/'
-               + ${entity.id} + '/delete'">
-    <input type="submit" value="Delete" onclick="return confirm('Are you sure?')">
-</form>
+<div class="container-xxl py-6 mt-5">
+    <div class="container">
+        <div class="section-header text-center mx-auto mb-5">
+            <h1 class="display-5 mb-3">User Profile</h1>
+            <h3 th:if="${message != null}" th:text="${message}" class="text-center"></h3>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Personal Information</h3>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Username</th>
+                        <td th:text="${entity.username}"></td>
+                    </tr>
+                    <tr>
+                        <th>First Name</th>
+                        <td th:text="${entity.firstname}"></td>
+                    </tr>
+                    <tr>
+                        <th>Last Name</th>
+                        <td th:text="${entity.lastname}"></td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td th:text="${entity.email}"></td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td th:text="${entity.address}"></td>
+                    </tr>
+                    <tr>
+                        <th>Birthday</th>
+                        <td th:text="${entity.birthDate}"></td>
+                    </tr>
+                </table>
+                <a class="btn btn-primary" th:href="@{/user/edit/{id}(id=${entity.id})}">Edit Profile</a>
+            </div>
+            <div class="col-md-4">
+                <img th:src="${entity.image}" alt="Profile Image" class="img-fluid" style="width: 100%">
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <h3>Orders</h3>
+                <ul class="nav nav-pills mb-3" id="ordersTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="created-tab" data-bs-toggle="pill" href="#CREATED" role="tab"
+                           aria-controls="created" aria-selected="true">Created</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="inProgress-tab" data-bs-toggle="pill" href="#APPROVED" role="tab"
+                           aria-controls="inProgress" aria-selected="false">In Progress</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="done-tab" data-bs-toggle="pill" href="#DONE" role="tab"
+                           aria-controls="done" aria-selected="false">Done</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="closed-tab" data-bs-toggle="pill" href="#REJECTED" role="tab"
+                           aria-controls="closed" aria-selected="false">Closed</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="ordersTabContent">
+                    <div th:each="status : ${T(com.hescha.medicalappointment.model.AppointmentStatus).values()}"
+                         th:id="${status}"
+                         th:classappend="${status == T(com.hescha.medicalappointment.model.AppointmentStatus).CREATED} ? 'active '"
+                         class="tab-pane" role="tabpanel" aria-labelledby="${status}-tab">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Appointment ID</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Message</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="appointment : ${entity.appointments}" th:if="${appointment.status == status}">
+                                <td th:text="${appointment.id}"></td>
+                                <td th:text="${appointment.category.name}"></td>
+                                <td th:text="${appointment.date}"></td>
+                                <td th:text="${appointment.timeSlot}"></td>
+                                <td th:text="${appointment.message}"></td>
+
+                                <td>
+                                    <a th:if="${status == T(com.hescha.medicalappointment.model.AppointmentStatus).CREATED}"
+                                       class="btn btn-danger" th:href="@{/appointment/{id}/delete(id=${appointment.id})}">Delete
+                                        Appointment</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{/commons/footer :: footer}"></footer>
+
+<div th:replace="~{/commons/script :: script}"></div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
+

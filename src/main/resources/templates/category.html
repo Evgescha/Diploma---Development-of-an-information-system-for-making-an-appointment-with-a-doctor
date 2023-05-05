@@ -47,9 +47,6 @@
             link.addEventListener('click', function (event) {
                 event.preventDefault();
                 const dataId = event.target.getAttribute("data-id");
-                alert(dataId);
-                alert(departmentNames[dataId]);
-                alert(departmentTexts[dataId]);
                 updateContent(departmentNames[dataId], departmentTexts[dataId]);
             });
         });
@@ -70,12 +67,13 @@
                 </div>
             </div>
             <div class="col-md-9 pl-md-5 pb-5 pl-0 probootstrap-inside">
-                <h1 class="mt-4 mb-4 nameOfCategory">Urology</h1>
-                <p class="textOfCategory">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                <h1 class="mt-4 mb-4 nameOfCategory">Click on the Department on the left</h1>
+                <p class="textOfCategory">And you'll show full information about it</p>
             </div>
         </div>
     </div>
 </section>
+
 <section class="probootstrap-section overlay bg-image" style="background-image: url(images/bg_1.jpg)">
     <div class="container">
         <div class="row">
