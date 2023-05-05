@@ -1,5 +1,5 @@
 package com.hescha.medicalappointment.model;
 
 public enum AppointmentStatus {
-    CREATED, APPROVED, DONE, REJECTED;
+    CREATED, PRESELECTED, APPROVED, DONE, REJECTED;
 }

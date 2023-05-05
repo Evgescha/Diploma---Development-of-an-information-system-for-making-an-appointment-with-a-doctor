@@ -30,6 +30,9 @@ public class User extends AbstractEntity {
     @OneToMany
     private List<Appointment> appointments = new ArrayList<>();
 
+    public String fullName(){
+        return firstname +" "+ lastname;
+    }
     @Override
     public String toString() {
         return username;
@@ -45,5 +48,9 @@ public class User extends AbstractEntity {
 
     public boolean isManagerOrAdmin() {
         return isAdmin() || isManager();
+    }
+
+    public List<Appointment> getActiveAppointments() {
+        return appointments.stream().filter(appointment -> appointment.getStatus() == AppointmentStatus.CREATED).collect(Collectors.toList());
     }
 }

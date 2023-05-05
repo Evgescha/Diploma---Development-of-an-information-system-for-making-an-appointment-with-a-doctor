@@ -53,6 +53,8 @@ public class AppointmentController {
 
     @GetMapping
     public String readAll(Model model) {
+        User loggedIn = securityService.getLoggedIn();
+        model.addAttribute("user", loggedIn);
         model.addAttribute("list", service.readAll());
         return THYMELEAF_TEMPLATE_ALL_ITEMS_PAGE;
     }
@@ -61,6 +63,13 @@ public class AppointmentController {
     public String read(@PathVariable("id") Long id, Model model) {
         model.addAttribute("entity", service.read(id));
         return THYMELEAF_TEMPLATE_ONE_ITEM_PAGE;
+    }
+    @GetMapping("/{id}/changeStatus")
+    public String changeStatus(@PathVariable("id") Long id, AppointmentStatus status) {
+        Appointment read = service.read(id);
+        read.setStatus(status);
+        service.update(read);
+        return REDIRECT_TO_ALL_ITEMS;
     }
 
     @GetMapping(path = {"/edit", "/edit/{id}"})

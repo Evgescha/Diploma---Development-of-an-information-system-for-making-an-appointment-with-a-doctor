@@ -20,7 +20,8 @@
                 <li class="nav-item"><a href="/category" class="nav-link">Departments</a></li>
                 <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-                <li class="nav-item" th:if="${#request.userPrincipal != null and !#request.isUserInRole('ADMIN') }"><a href="/user/profile">Profile</a></li>
+                <li class="nav-item" th:if="${#request.userPrincipal != null and !#request.isUserInRole('ADMIN') }"><a href="/user/profile"  class="nav-link">Profile</a></li>
+                <li class="nav-item" th:if="${#request.userPrincipal != null}"><a href="/appointment"  class="nav-link">Appointment</a></li>
                 <li class="nav-item" th:if="${#request.isUserInRole('ADMIN') }"><a href="/user"  class="nav-link">Users</a></li>
                 <li class="nav-item" th:if="${#request.userPrincipal == null}"><a href="/login" class="nav-link">Login</a></li>
                 <li class="nav-item" th:if="${#request.userPrincipal != null}"><a href="/logout" class="nav-link">Logout</a></li>

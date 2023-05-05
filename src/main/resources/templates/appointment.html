@@ -1,36 +1,13 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Medical Appointments :: Medical Appointment System</title>
 
     <head th:replace="~{/commons/head :: head}"></head>
 </head>
 <body>
-<header th:replace="~{/commons/header :: header}"></header>
-
-<!--== Start Page Header Area ==-->
-<div class="page-header-wrap bg-img" data-bg="/img/bg/page-header-bg.jpg">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <div class="page-header-content">
-                    <div class="page-header-content-inner">
-                        <h1>Medical Appointments</h1>
-
-                        <ul class="breadcrumb">
-                            <li><a href="/">Home</a></li>
-                            <li class="current"><a href="#">Appointments</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--== End Page Header Area ==-->
+<head th:replace="~{/commons/header :: header}"></head>
+<head th:replace="~{/commons/banner :: banner}"></head>
 
 <div class="container-xxl py-6 mt-5">
     <div class="container">
@@ -44,10 +21,10 @@
 <div class="container-xxl py-6" th:if="${user != null}">
     <div class="container">
         <div class="row">
-            <h2 class="display-5 mb-3">My Appointments</h2>
+            <br>
             <div class="tab-content">
                 <div class="tab-pane active show">
-                    <table class="table table-bordered">
+                    <table class="table table-bappointmented">
                         <thead>
                         <tr>
                             <th>Appointment ID</th>
@@ -60,7 +37,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="appointment : ${user.getAppointments()}">
+                        <tr th:each="appointment : ${user.getActiveAppointments()}">
                             <td th:text="${appointment.id}"></td>
                             <td th:text="${appointment.date}"></td>
                             <td th:text="${appointment.timeSlot.simpleName}"></td>
@@ -68,8 +45,11 @@
                             <td th:text="${appointment.status}"></td>
                             <td th:text="${appointment.message}"></td>
                             <td>
-                                <a class="btn btn-primary" th:href="@{/appointment/{id}/edit(id=${appointment.id})}">Edit</a>
-                                <a class="btn btn-danger" th:href="@{/appointment/{id}/delete(id=${appointment.id})}">Delete</a>
+                                <a class="btn btn-primary"
+                                   th:href="@{/appointment/{id}/changeStatus?status=PRESELECTED(id=${appointment.id})}">Apply
+                                    </a>
+                                <a class="btn btn-danger" th:href="@{/appointment/{id}/delete(id=${appointment.id})}">Delete
+                                    </a>
                             </td>
                         </tr>
                         </tbody>
@@ -80,98 +60,89 @@
     </div>
 </div>
 
-<div class="container-xxl py-6" th:if="${#request.isUserInRole('ADMIN') or user.isAdmin()}">
+
+
+<div class="container-xxl py-6" th:if="${#request.isUserInRole('ADMIN') or (user.isManagerOrAdmin() == true)}">
     <div class="container">
         <div class="row">
-            <h2 class="display-5 mb-3">All Appointments</h2>
-            <div class="tab-content">
-                <div class="tab-pane active show">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Appointment ID</th>
-                            <th>Patient Name</th>
-                            <th>Date</th>
-                            <th>Time Slot</th>
-                            <th>Category</th>
-                            <th>Status</th>
-                            <th>Message</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="appointment : ${allAppointments}">
-                            <td th:text="${appointment.id}"></td>
-                            <td th:text="${appointment.user.name}"></td>
-                            <td th:text="${appointment.date}"></td>
-                            <td th:text="${appointment.timeSlot.simpleName}"></td>
-                            <td th:text="${appointment.category.name}"></td>
-                            <td th:text="${appointment.status}"></td>
-                            <td th:text="${appointment.message}"></td>
-                            <td>
-                                <a class="btn btn-primary" th:href="@{/appointment/{id}/edit(id=${appointment.id})}">Edit</a>
-                                <a class="btn btn-danger" th:href="@{/appointment/{id}/delete(id=${appointment.id})}">Delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+            <h2 class="display-5 mb-3">All Orders</h2>
+            <div class="col-12">
+                <ul class="nav nav-pills mb-3" id="ordersTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="created-tab" data-bs-toggle="pill" href="#PRESELECTED" role="tab"
+                           aria-controls="created" aria-selected="true">PRESELECTED</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="inProgress-tab" data-bs-toggle="pill" href="#APPROVED" role="tab"
+                           aria-controls="inProgress" aria-selected="false">APPROVED</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="done-tab" data-bs-toggle="pill" href="#DONE" role="tab"
+                           aria-controls="done"
+                           aria-selected="false">DONE</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="closed-tab" data-bs-toggle="pill" href="#REJECTED" role="tab"
+                           aria-controls="closed" aria-selected="false">REJECTED</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="ordersTabContent">
+                    <div th:each="status : ${T(com.hescha.medicalappointment.model.AppointmentStatus).values()}"
+                         th:id="${status}"
+                         th:classappend="${status == T(com.hescha.medicalappointment.model.AppointmentStatus).PRESELECTED} ? 'active '"
+                         class="tab-pane" role="tabpanel" aria-labelledby="${status}-tab">
+                        <table class="table table-bappointmented">
+                            <thead>
+                            <tr>
+                                <th>Appointment ID</th>
+                                <th>Patient Name</th>
+                                <th>Date</th>
+                                <th>Time Slot</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Message</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="appointment : ${list}" th:if="${appointment.status == status}">
+                                <td th:text="${appointment.id}"></td>
+                                <td th:text="${appointment.owner.fullName()}"></td>
+                                <td th:text="${appointment.date}"></td>
+                                <td th:text="${appointment.timeSlot.simpleName}"></td>
+                                <td th:text="${appointment.category.name}"></td>
+                                <td th:text="${appointment.status}"></td>
+                                <td th:text="${appointment.message}"></td>
+                                <td class="d-flex" style="font-size: 15px;flex-direction: column;">
+                                    <a class="btn btn-primary"
+                                       th:href="@{/appointment/edit/{id}(id=${appointment.id})}">EDIT</a>
+                                    <a class="btn btn-primary"
+                                       th:href="@{/appointment/{id}/changeStatus?status=APPROVED(id=${appointment.id})}">APPROVED</a>
+                                    <a class="btn btn-primary"
+                                       th:href="@{/appointment/{id}/changeStatus?status=DONE(id=${appointment.id})}">DONE</a>
+                                    <a class="btn btn-primary"
+                                       th:href="@{/appointment/{id}/changeStatus?status=REJECTED(id=${appointment.id})}">REJECTED</a>
+                                    <a class="btn btn-danger"
+                                       th:href="@{/appointment/{id}/delete(id=${appointment.id})}">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="container-xxl py-6">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="display-5 mb-3">Create New Appointment</h2>
-            </div>
-            <div class="col-12">
-                <form th:action="@{/appointment/create}" th:object="${appointment}" method="post" class="appointment-form">
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="date">Date</label>
-                            <input type="date" class="form-control" id="date" th:field="*{date}" required>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="timeSlot">Time Slot</label>
-                            <select id="timeSlot" class="form-control" th:field="*{timeSlot}" required>
-                                <option th:each="timeSlot : ${timeSlots}" th:value="${timeSlot.id}" th:text="${timeSlot.simpleName}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="category">Category</label>
-                            <select id="category" class="form-control" th:field="*{category}" required>
-                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="status">Status</label>
-                            <select id="status" class="form-control" th:field="*{status}" required>
-                                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea class="form-control" id="message" rows="3" th:field="*{message}"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Create Appointment</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<footer class="footer mt-auto py-3">
-    <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
-    </div>
-</footer>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5D3Uqd0zjI6D76lmX3l5XCjAfxA5miY97OMFzFfe" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-IKHBf/mUzpJP+49V7Kw6X2E7HE/cZb5p5V7E5r5ze5Kb/166N/1HGyM4/4XJ4o+8F" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0v8FqFjcJ6pajs/rfdfs3SO+kD4Ck5BdPtF+to8xM36+4fkd" crossorigin="anonymous"></script>
+
+
+<footer th:replace="~{/commons/footer :: footer}"></footer>
+
+<div th:replace="~{/commons/script :: script}"></div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

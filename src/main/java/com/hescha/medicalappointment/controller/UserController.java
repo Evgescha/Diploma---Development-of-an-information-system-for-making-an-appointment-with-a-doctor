@@ -1,5 +1,6 @@
 package com.hescha.medicalappointment.controller;
 
+import com.hescha.medicalappointment.model.SecurityService;
 import com.hescha.medicalappointment.model.User;
 import com.hescha.medicalappointment.service.AppointmentService;
 import com.hescha.medicalappointment.service.RoleService;
@@ -32,6 +33,8 @@ public class UserController {
     private final RoleService roleService;
     private final AppointmentService appointmentService;
 
+    private final SecurityService securityService;
+
     @GetMapping
     public String readAll(Model model) {
         model.addAttribute("list", service.readAll());
@@ -43,6 +46,12 @@ public class UserController {
         model.addAttribute("entity", service.read(id));
         return THYMELEAF_TEMPLATE_ONE_ITEM_PAGE;
     }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "redirect:/user/" + securityService.getLoggedIn().getId();
+    }
+
 
     @GetMapping(path = {"/edit", "/edit/{id}"})
     public String editPage(Model model, @PathVariable(name = "id", required = false) Long id) {
