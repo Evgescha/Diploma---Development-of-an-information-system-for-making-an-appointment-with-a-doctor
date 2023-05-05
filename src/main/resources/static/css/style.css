@@ -861,3 +861,10 @@ textarea {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+
+.form-group select, .form-group textarea, .form-group input[type="date"], .form-group input{
+  background: white!important;
+  border: 1px solid black;
+  color: black!important;
+}
