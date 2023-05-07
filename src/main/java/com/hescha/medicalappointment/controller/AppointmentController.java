@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -88,6 +90,8 @@ public class AppointmentController {
         return THYMELEAF_TEMPLATE_EDIT_PAGE;
     }
 
+
+    @PreAuthorize("isAuthenticated()")
     @PostMapping
     public String save(@ModelAttribute Appointment entity, RedirectAttributes ra) {
         if (entity.getId() == null) {
