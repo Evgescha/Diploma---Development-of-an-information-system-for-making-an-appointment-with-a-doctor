@@ -23,7 +23,10 @@
             <div class="row">
                 <h3 th:if="${success != null}" th:text="${success}" class="text-center"></h3>
 
-                <h3 th:if="${#request.getParameter('error') != null and #request.getParameter('error') == 'true'}" class="text-center"></h3>
+                <h3 th:if="${#request.getParameter('error') != null}" class="text-center">
+                    Check yours login and password and try again
+                </h3>
+
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6 sign-in">
