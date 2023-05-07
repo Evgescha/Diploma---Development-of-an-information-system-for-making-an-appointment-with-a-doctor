@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class Category extends AbstractEntity{
     private String name;
-    @Column(length = 3000)
+    @Column(length = 30000)
     private String description;
     @OneToMany
     private List<Appointment> appointments = new ArrayList<>();

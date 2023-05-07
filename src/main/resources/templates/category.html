@@ -32,7 +32,7 @@
     /*[/]*/
 
     document.addEventListener('DOMContentLoaded', function () {
-        const departmentLinks = document.querySelectorAll('.list-unstyled.probootstrap-light a');
+        const departmentLinks = document.querySelectorAll('.list-unstyled.probootstrap-light .link');
         const nameOfCategory = document.querySelector('.nameOfCategory');
         const textOfCategory = document.querySelector('.textOfCategory');
 
@@ -64,7 +64,10 @@
                 <div class="mb-3 pt-5">
                     <h2 class="h6">Departments</h2>
                     <ul class="list-unstyled probootstrap-light mb-4">
-                        <li th:each="entity:${categories}"><a href="#" th:text="${entity.name}" th:data-id="${entity.id}">Urology</a></li>
+                        <li th:each="entity:${categories}" class="d-flex">
+                            <a th:href="'/category/edit/'+${entity.id}"  th:if="${#request.isUserInRole('ADMIN') }"> Edit - </a>
+                            <a href="#" th:text="${entity.name}" th:data-id="${entity.id}" class="link">Urology</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -80,10 +83,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h2 class="text-white display-4">Specialists in Family  Healthcare</h2>
-                <p class="text-white mb-5 lead">Far far away, behind the word mountains, far from the countries Vokalia.</p>
+                <h2 class="text-white display-4">Specialists in Family Healthcare</h2>
+                <p class="text-white mb-5 lead">Far far away, behind the word mountains, far from the countries
+                    Vokalia.</p>
                 <div class="row justify-content-center mb-5">
-                    <div class="col-md-4"><a href="/#appointment" class="btn btn-secondary btn-block">Appointment <span class="icon-arrow-right"></span></a></div>
+                    <div class="col-md-4"><a href="/#appointment" class="btn btn-secondary btn-block">Appointment <span
+                            class="icon-arrow-right"></span></a></div>
                 </div>
             </div>
         </div>

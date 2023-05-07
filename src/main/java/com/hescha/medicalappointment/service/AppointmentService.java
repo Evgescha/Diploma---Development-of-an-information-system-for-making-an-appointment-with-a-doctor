@@ -24,27 +24,6 @@ public class AppointmentService extends CrudService<Appointment> {
         return repository.findByCategoryAndTimeSlotAndDate(category, timeSlot, date);
     }
 
-    public Appointment findByOwner(User owner) {
-        return repository.findByOwner(owner);
-    }
-
-    public Appointment findByCategory(Category category) {
-        return repository.findByCategory(category);
-    }
-
-    public Appointment findByDate(LocalDate date) {
-        return repository.findByDate(date);
-    }
-
-    public Appointment findByStatus(AppointmentStatus status) {
-        return repository.findByStatus(status);
-    }
-
-    public Appointment findByTimeSlot(TimeSlot timeSlot) {
-        return repository.findByTimeSlot(timeSlot);
-    }
-
-
     public Appointment update(Long id, Appointment entity) {
         Appointment read = read(id);
         if (read == null) {

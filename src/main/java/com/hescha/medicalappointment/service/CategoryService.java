@@ -41,5 +41,6 @@ public class CategoryService extends CrudService<Category> {
 
     private void updateFields(Category entity, Category read) {
         read.setName(entity.getName());
+        read.setDescription(entity.getDescription());
     }
 }
