@@ -121,7 +121,7 @@ public class UserService extends CrudService<User> implements org.springframewor
 
     private void updateFields(User entity, User read) {
         read.setUsername(entity.getUsername());
-        read.setPassword(entity.getPassword());
+        read.setPassword(passwordEncoder.encode(entity.getPassword()));
         read.setFirstname(entity.getFirstname());
         read.setLastname(entity.getLastname());
         read.setEmail(entity.getEmail());
