@@ -1,0 +1,57 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class APPOINTMENT {
+   DATE: date
+   STATUS: integer
+   TIME_SLOT: integer
+   CATEGORY_ID: bigint
+   OWNER_ID: bigint
+   MESSAGE: character varying(3000)
+   ID: bigint
+}
+class CATEGORY {
+   NAME: character varying(255)
+   DESCRIPTION: character varying(3000)
+   ID: bigint
+}
+class CATEGORY_APPOINTMENTS {
+   CATEGORY_ID: bigint
+   APPOINTMENTS_ID: bigint
+}
+class MY_USER {
+   ADDRESS: character varying(255)
+   BIRTH_DATE: date
+   EMAIL: character varying(255)
+   FIRSTNAME: character varying(255)
+   IMAGE: character varying(255)
+   LASTNAME: character varying(255)
+   PASSWORD: character varying(255)
+   USERNAME: character varying(255)
+   ID: bigint
+}
+class MY_USER_APPOINTMENTS {
+   USER_ID: bigint
+   APPOINTMENTS_ID: bigint
+}
+class MY_USER_ROLES {
+   USER_ID: bigint
+   ROLES_ID: bigint
+}
+class ROLE {
+   NAME: character varying(255)
+   ID: bigint
+}
+
+APPOINTMENT            -[#595959,plain]-^  CATEGORY              : "CATEGORY_ID:ID"
+APPOINTMENT            -[#595959,plain]-^  MY_USER               : "OWNER_ID:ID"
+CATEGORY_APPOINTMENTS  -[#595959,plain]-^  APPOINTMENT           : "APPOINTMENTS_ID:ID"
+CATEGORY_APPOINTMENTS  -[#595959,plain]-^  CATEGORY              : "CATEGORY_ID:ID"
+MY_USER_APPOINTMENTS   -[#595959,plain]-^  APPOINTMENT           : "APPOINTMENTS_ID:ID"
+MY_USER_APPOINTMENTS   -[#595959,plain]-^  MY_USER               : "USER_ID:ID"
+MY_USER_ROLES          -[#595959,plain]-^  MY_USER               : "USER_ID:ID"
+MY_USER_ROLES          -[#595959,plain]-^  ROLE                  : "ROLES_ID:ID"
+@enduml
